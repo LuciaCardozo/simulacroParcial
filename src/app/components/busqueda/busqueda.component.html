@@ -10,27 +10,31 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/actor/alta']">Alta actor</a>
+        <a class="nav-link" [routerLink]="['/actor/alta']">Alta de actor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/pelicula/alta']">Alta pelicula</a>
+        <a class="nav-link" [routerLink]="['/pelicula/alta']">Alta de pelicula</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/actor/listado']">Listado de actores</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0 d-flex">
+    <!-- <form class="form-inline my-2 my-lg-0 d-flex">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" disabled>
         <button class="btn btn-success my-2 my-sm-0" disabled>Search</button>
-    </form>
+    </form> -->
   </div>
   </nav>
 
   <main role="main">
+    <!-- <app-pelicula-listado [datos]="listaPeliculas"></app-pelicula-listado> -->
   <h3 class="text-center mt-5" style="font-family: cursive;">Lista de peliculas</h3>
   <div>
     <app-tabla-pelicula
     [peliculas]="listaPeliculas"
     (clickPeli)="cargarDatos($event)"></app-tabla-pelicula>
   </div>
-  <div *ngIf="mostrarDatos">
+  <div *ngIf="mostrarDatos"> -->
     <!-- Example row of columns -->
     <div class="row" style="background-color: #453e5191; width: 101vw; height: 100vh; display: flex; align-items: center;
     justify-content: center; position: fixed; top: 0; left: 0; z-index: 999999;">
@@ -58,7 +62,15 @@
       </div>
     </div>
     </div>
-  </div> <!-- /container -->
+  </div> 
+  <!-- /container -->
   <!-- <hr> -->
   </main>
  </div>
+
+ <div *ngIf="loading" style="width: 100vw; height: 100vh; display: flex; position: fixed;
+  top: 0; left: 0; background-color: #198754ad; justify-content: center; align-items: center;">
+  <div>
+    <img src="../../../assets/logoPng.png" alt="" width="80px" class="loading">
+  </div>
+</div>

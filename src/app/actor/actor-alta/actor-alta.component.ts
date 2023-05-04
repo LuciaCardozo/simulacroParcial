@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiPeliculasService } from 'src/app/services/apiPeliculas/api-peliculas.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
@@ -9,24 +10,85 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 })
 export class ActorAltaComponent implements OnInit {
   form: FormGroup;
-  constructor(private fb: FormBuilder, private toast:ToastService) { 
+  imageToUpload:any;
+  paises:any;
+  loading: boolean = false;
+  constructor(private fb: FormBuilder, private toast:ToastService, private database:ApiPeliculasService) { 
     this.form = this.fb.group({
       name: ["", Validators.required],
       lastname: ["", Validators.required],
+      state: new FormControl({value: '', disabled: true}, Validators.required),
+      paisSeleccionado: new FormControl({value: '', disabled: true}, Validators.required),
+      username: ["", Validators.required],
+      email: ["", Validators.required],
+      address: ["", Validators.required],
+      addressTwo: "",
+
     });
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.database.getPaises().subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log(res)
+        this.paises = res;
+        this.paises.sort((a:any,b:any)=> a.name.common>b.name.common)
+      }, error: (err)=> {
+        this.loading = false;
+        console.log(err)
+      }
+    })
+    console.log(this.paises)
   }
 
   altaActor() {
-    console.log(this.form.status)
+    this.loading = true;
+    let datos = {...this.form.value, image:this.imageToUpload}
+    console.log(datos)
     if (this.form.status == "VALID") {
-      
-     
+      this.database.alta('actores',datos).then((res)=>{
+        this.toast.show("Alta exitoso!", { classname: 'bg-success', "delay": "2000" });
+        this.loading = false;
+        this.limpiarForm();
+        console.log("alta actor ok", res)
+      }).catch((err)=>{
+        this.loading = false;
+        console.log("alta actor error", err)  
+      })
     } else {
+      this.loading = false;
       this.toast.show("Completa el campo", { classname: 'bg-danger', "delay": "2000" });
     }
+  }
+
+  uploadImage(event:any) {
+    let reader = new FileReader();
+    let archivoCapturado = event.target.files[0];
+    reader.readAsDataURL(archivoCapturado);
+    reader.onloadend = () => {
+      this.imageToUpload = reader.result
+    }
+  }
+
+  countrySeleccionado(dato:any){
+    this.form.get('paisSeleccionado')?.enable()
+    this.form.get('state')?.enable()
+    this.form.controls['paisSeleccionado'].setValue(dato.pais)
+    this.form.controls['state'].setValue(dato.state)
+  }
+
+  limpiarForm() {
+    this.form.controls['name'].setValue('')
+    this.form.controls['lastname'].setValue('')
+    this.form.controls['username'].setValue('')
+    this.form.controls['email'].setValue('')
+    this.form.controls['address'].setValue('')
+    this.form.controls['addressTwo'].setValue('')
+    this.form.controls['paisSeleccionado'].setValue('')
+    this.form.controls['state'].setValue('')
+    this.imageToUpload = null;
   }
 
 }

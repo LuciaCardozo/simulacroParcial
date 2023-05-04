@@ -12,6 +12,10 @@ export class ApiPeliculasService {
     return this.http.get('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bcd8473c8f83b622eecae09bcd1ffb2e')
   }
 
+  getPaises() {
+    return this.http.get('https://restcountries.com/v3.1/all');//lang/spanish
+  }
+
   async traerTodo(coleccion: any) {
     try {
       return await this.firestore.collection(coleccion).snapshotChanges();
@@ -31,4 +35,6 @@ export class ApiPeliculasService {
       return null;
     }
   }
+
+
 }

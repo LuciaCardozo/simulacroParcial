@@ -6,13 +6,15 @@ import { ActorAltaComponent } from './actor-alta/actor-alta.component';
 import { ActorListadoComponent } from './actor-listado/actor-listado.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputValidatorComponent } from '../shared/input-validator/input-validator.component';
+import { TablaPaisesComponent } from '../shared/tabla-paises/tabla-paises.component';
 
 
 @NgModule({
   declarations: [
     ActorAltaComponent,
     ActorListadoComponent,
-    InputValidatorComponent
+    InputValidatorComponent,
+    TablaPaisesComponent
   ],
   imports: [
     CommonModule,

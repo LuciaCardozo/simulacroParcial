@@ -18,16 +18,19 @@ export class BusquedaComponent implements OnInit {
     id:null,
     img:null
   };
+  loading: boolean = false;
   constructor(private db:ApiPeliculasService) { }
 
   async ngOnInit() {
+    this.loading = true;
     const res = await this.db.traerTodo("peliculas");
     res?.subscribe({
       next: (res) => {
-        let lista = res.map((pelicula: any) => pelicula.payload.doc.data());
-        this.listaPeliculas = lista;
+        this.loading = false;
+        this.listaPeliculas = res.map((pelicula: any) => pelicula.payload.doc.data());
       },
       error: (error) => {
+        this.loading = false;
         console.log(error);
       }
     });

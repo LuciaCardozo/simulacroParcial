@@ -8,12 +8,14 @@ import { ActorModule } from './actor/actor.module';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { BienvenidoComponent } from './components/bienvenido/bienvenido.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TablaPeliculaComponent } from './components/tabla-pelicula/tabla-pelicula.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ToastComponent } from './shared/toast/toast.component';
 import { InputValidatorComponent } from './shared/input-validator/input-validator.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TablaPeliculaComponent } from './shared/tabla-pelicula/tabla-pelicula.component';
+import { TablaPaisesComponent } from './shared/tabla-paises/tabla-paises.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArRE_ER1KWu4DizpiWm43TOxl-lY7m1rM",
@@ -28,14 +30,16 @@ const firebaseConfig = {
     AppComponent,
     BusquedaComponent,
     BienvenidoComponent,
+    ToastComponent,
     TablaPeliculaComponent,
-    ToastComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     PeliculasModule,
     ActorModule,
+    CommonModule,
+    FormsModule,
     NgbModule,
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig)

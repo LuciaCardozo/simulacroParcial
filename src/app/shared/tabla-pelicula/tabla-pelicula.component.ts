@@ -15,7 +15,7 @@ export class TablaPeliculaComponent implements OnInit {
 
   seHizoClick(pelicula:any, i:number){
     let peliculaSeleccionada = {...pelicula, posicion:i}
-    this.clickPeli.emit(pelicula);
+    this.clickPeli.emit(peliculaSeleccionada);
   }
 
 }
