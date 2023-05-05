@@ -13,6 +13,7 @@ export class ActorAltaComponent implements OnInit {
   imageToUpload:any;
   paises:any;
   loading: boolean = false;
+  asd:any;
   constructor(private fb: FormBuilder, private toast:ToastService, private database:ApiPeliculasService) { 
     this.form = this.fb.group({
       name: ["", Validators.required],
@@ -20,7 +21,7 @@ export class ActorAltaComponent implements OnInit {
       state: new FormControl({value: '', disabled: true}, Validators.required),
       paisSeleccionado: new FormControl({value: '', disabled: true}, Validators.required),
       username: ["", Validators.required],
-      email: ["", Validators.required],
+      email: ["",Validators.email],
       address: ["", Validators.required],
       addressTwo: "",
 
